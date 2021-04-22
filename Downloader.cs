@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace xkcd_comics
 {
@@ -74,72 +75,73 @@ namespace xkcd_comics
 
 		}
 
-        public static bool GetImageByID(int id)
+		public static Xkcd_data GetDataByID(int id)
 		{
 			try
 			{
 				using (WebClient client = new WebClient())
 				{
+					string title;
+					string titleText;
+					string transcript;
+					string imgUrl;
+					string explanation;
 
-					string jsonUrl = "https://xkcd.com/" + id + "/info.0.json";
-					Console.WriteLine(jsonUrl);
-					Console.WriteLine("Get json");
-					var st = client.DownloadString(jsonUrl);
-					string imgUrl = (string)JObject.Parse(st)["img"];
+					string url = "https://www.explainxkcd.com/wiki/index.php/" + id;
+					string page = client.DownloadString(url);
+					Console.WriteLine(page);
 
-					string filename = id + "";
+					title = new Regex("<td style=\"font-size: 20px; padding-bottom:10px\"><b>").Split(page)[1];
+					title = title.Split('<')[0];
+					Console.WriteLine(title);
+
+					imgUrl = new Regex("src=\"(?=/wiki/images/)").Split(page)[1];
+					imgUrl = imgUrl.Split('"')[0];
+					imgUrl = "https://www.explainxkcd.com" + imgUrl;
+					Console.WriteLine(imgUrl);
+
+					titleText = new Regex("Title text:</span>").Split(page)[1];
+					titleText = titleText.Split('<')[0];
+					Console.WriteLine(titleText);
+
+					transcript = new Regex("Transcript\">edit</a><span class=\"mw-editsection-bracket\">]</span></span></h2>").Split(page)[1];
+					transcript = new Regex("<h2><span class=\"mw-headline").Split(transcript)[0];
+					transcript = new Regex("<.+?>").Replace(transcript, "");
+					Console.WriteLine(transcript);
+
+					explanation = new Regex("Explanation\">edit</a><span class=\"mw-editsection-bracket\">]</span></span></h2>").Split(page)[1];
+					explanation = new Regex("<h2><span class=\"mw-headline\" id=\"Transcript\">Transcript").Split(explanation)[0];
+					explanation = new Regex("<.+?>").Replace(explanation, "");
+					Console.WriteLine(explanation);
+
+					Xkcd_data data = new Xkcd_data(id, title, titleText, transcript, imgUrl, explanation);
+
+					//string jsonUrl = "https://xkcd.com/" + id + "/info.0.json";
+					//Console.WriteLine(jsonUrl);
+					//Console.WriteLine("Get json");
+					//var st = client.DownloadString(jsonUrl);
+					return data;
+
 
 					/*
-					 * Weirdest bug I think I've ever come across.
+					 * Weirdest bug I thing I've ever come across.
 					 * Without this the request times out. Consistently and regardless of how long i wait.
 					 */
-					Console.WriteLine("Start google");
-					for (int i = 0; i < 20; i++)
-					{
-						client.DownloadString("http://www.gooogle.com");
-						Console.WriteLine(i);
-					}
+					//Console.WriteLine("Start google");
+					//for (int i = 0; i < 20; i++)
+					//{
+					//	client.DownloadString("http://www.gooogle.com");
+					//	Console.WriteLine(i);
+					//}
 					Console.WriteLine("Finish google");
 
-					return GetImageByUrl(filename, imgUrl);
 				}
-
-
-
-
-
-			//HttpWebRequest request = (HttpWebRequest)WebRequest.Create(jsonUrl);
-
-			//HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-			//// Display the status.
-			//Console.WriteLine(response.StatusDescription);
-			//// Get the stream containing content returned by the server.
-			//Stream dataStream = response.GetResponseStream();
-			//// Open the stream using a StreamReader for easy access.
-			//StreamReader reader = new StreamReader(dataStream);
-			//// Read the content.
-			//string responseFromServer = reader.ReadToEnd();
-			//// Display the content.
-			//Console.WriteLine(responseFromServer);
-			//// Cleanup the streams and the response.
-			//reader.Close();
-			//dataStream.Close();
-			//response.Close();
-			//Thread.Sleep(10000);
-			//for (int i = 0; i < 20; i++)
-			//{
-			//	client.DownloadString("http://www.gooogle.com");
-			//	Console.WriteLine(i);
-			//}
-
-
 			}
-            catch
+			catch (Exception e)
 			{
-				Console.WriteLine(false);
-                return false;
+				Console.WriteLine(e);
+				return null;
 			}
-
-}
-    }
+		}
+	}
 }

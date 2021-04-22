@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Drawing;
+using Newtonsoft.Json.Linq;
 
 namespace xkcd_comics
 {
@@ -45,19 +46,27 @@ namespace xkcd_comics
 		{
 			if (Downloader.HasConnection())
 			{
-				if (Downloader.GetImageByID(currentID))
+				Xkcd_data data = Downloader.GetDataByID(currentID);
+
+				if (Downloader.GetImageByUrl(currentID+"", data.imgUrl))
 				{
 					if (image_showcase.Image != null)
 					{
 						image_showcase.Image.Dispose();
 					}
 					string dlPath = Downloader.downloadPath;
-					//Image img = Image.FromFile(dlPath + currentID);
-					//image_showcase.Image = img;
-
 					Bitmap img = new Bitmap(dlPath + currentID);
-
 					image_showcase.Image = (Image)img;
+					lb_id.Text = "ID: " + data.id;
+					lb_title.Text = "Title: " + data.title;
+					lb_title_text.Text = "Title text:" + data.titleText;
+
+					lb_transcript.Location = new Point(lb_transcript.Location.X, lb_title_text.Location.Y + lb_title_text.Height + 10);
+					lb_transcript.Text = "Transcript:" + data.transcript;
+
+					lb_explanation.Location = new Point(lb_explanation.Location.X, lb_transcript.Location.Y + lb_transcript.Height + 10);
+					lb_explanation.Text = "Explanation: " + data.explanation;
+
 
 				}
 				else
