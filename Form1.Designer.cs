@@ -36,7 +36,7 @@ namespace xkcd_comics
 			this.btn_search = new System.Windows.Forms.Button();
 			this.tb_search = new System.Windows.Forms.TextBox();
 			this.image_showcase = new System.Windows.Forms.PictureBox();
-			this.panel1 = new System.Windows.Forms.Panel();
+			this.pnl_details = new System.Windows.Forms.Panel();
 			this.lb_explanation = new System.Windows.Forms.Label();
 			this.lb_transcript = new System.Windows.Forms.Label();
 			this.lb_title_text = new System.Windows.Forms.Label();
@@ -44,7 +44,7 @@ namespace xkcd_comics
 			this.lb_id = new System.Windows.Forms.Label();
 			this.controls.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.image_showcase)).BeginInit();
-			this.panel1.SuspendLayout();
+			this.pnl_details.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// controls
@@ -115,17 +115,17 @@ namespace xkcd_comics
 			this.image_showcase.TabIndex = 2;
 			this.image_showcase.TabStop = false;
 			// 
-			// panel1
+			// pnl_details
 			// 
-			this.panel1.Controls.Add(this.lb_explanation);
-			this.panel1.Controls.Add(this.lb_transcript);
-			this.panel1.Controls.Add(this.lb_title_text);
-			this.panel1.Controls.Add(this.lb_title);
-			this.panel1.Controls.Add(this.lb_id);
-			this.panel1.Location = new System.Drawing.Point(0, 95);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(339, 500);
-			this.panel1.TabIndex = 3;
+			this.pnl_details.Controls.Add(this.lb_explanation);
+			this.pnl_details.Controls.Add(this.lb_transcript);
+			this.pnl_details.Controls.Add(this.lb_title_text);
+			this.pnl_details.Controls.Add(this.lb_title);
+			this.pnl_details.Controls.Add(this.lb_id);
+			this.pnl_details.Location = new System.Drawing.Point(0, 95);
+			this.pnl_details.Name = "pnl_details";
+			this.pnl_details.Size = new System.Drawing.Size(339, 500);
+			this.pnl_details.TabIndex = 3;
 			// 
 			// lb_explanation
 			// 
@@ -180,7 +180,7 @@ namespace xkcd_comics
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(984, 661);
-			this.Controls.Add(this.panel1);
+			this.Controls.Add(this.pnl_details);
 			this.Controls.Add(this.image_showcase);
 			this.Controls.Add(this.controls);
 			this.Name = "Form1";
@@ -188,8 +188,8 @@ namespace xkcd_comics
 			this.controls.ResumeLayout(false);
 			this.controls.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.image_showcase)).EndInit();
-			this.panel1.ResumeLayout(false);
-			this.panel1.PerformLayout();
+			this.pnl_details.ResumeLayout(false);
+			this.pnl_details.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -202,7 +202,7 @@ namespace xkcd_comics
 		private System.Windows.Forms.TextBox tb_search;
 		private System.Windows.Forms.Label lb_message;
 		private System.Windows.Forms.PictureBox image_showcase;
-		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.Panel pnl_details;
 		private System.Windows.Forms.Label lb_transcript;
 		private System.Windows.Forms.Label lb_title_text;
 		private System.Windows.Forms.Label lb_title;

@@ -89,7 +89,7 @@ namespace xkcd_comics
 
 					string url = "https://www.explainxkcd.com/wiki/index.php/" + id;
 					string page = client.DownloadString(url);
-					Console.WriteLine(page);
+					//Console.WriteLine(page);
 
 					title = new Regex("<td style=\"font-size: 20px; padding-bottom:10px\"><b>").Split(page)[1];
 					title = title.Split('<')[0];
@@ -141,6 +141,38 @@ namespace xkcd_comics
 			{
 				Console.WriteLine(e);
 				return null;
+			}
+		}
+
+		public static int Query(string search)
+		{
+			try
+			{
+				using (WebClient client = new WebClient())
+				{
+					string url = "https://relevantxkcd.appspot.com/process?action=xkcd&query=" + search;
+					string response = client.DownloadString(url);
+					Console.WriteLine("Response");
+					Console.WriteLine(response);
+
+					string likeliest = response.Split('\n')[2].Split(' ')[0];
+					Console.WriteLine("likely");
+					Console.WriteLine(likeliest);
+
+					bool isNumeric = int.TryParse(likeliest, out int numeric);
+
+					client.Dispose();
+
+					if (isNumeric)
+					{
+						return numeric;
+					}
+					return 0;
+				}
+			}
+			catch
+			{
+				return 0;
 			}
 		}
 	}

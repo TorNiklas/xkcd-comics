@@ -21,12 +21,24 @@ namespace xkcd_comics
 		{
 			AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
 			InitializeComponent();
+			lb_transcript.MaximumSize = new Size(pnl_details.Width, 0);
+			lb_explanation.MaximumSize = new Size(pnl_details.Width, 0);
 			GetAndPresentImageForCurrentID();
 		}
 
 		private void btn_search_Click(object sender, EventArgs e)
 		{
-			currentID = 614;
+			string input = tb_search.Text;
+			bool isNumeric = int.TryParse(input, out int numericInput);
+
+			if(isNumeric)
+			{
+				currentID = numericInput;
+			}
+			else
+			{
+				currentID = Downloader.Query(input);
+			}
 			GetAndPresentImageForCurrentID();
 		}
 
