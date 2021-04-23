@@ -1,4 +1,25 @@
 # xkcd-comics
+## Features completed
+• browse through the comics,
+• see the comic details, including its description,
+• search for comics by the comic number as well as text,
+• get the comic explanation,
+• support multiple form factors
+
+## Features not completed
+• favorite the comics, which would be available offline too,
+• send comics to others,
+• get notifications when a new comic is published
+
+## Rationale
+The reason I've only completed some of the tasks is that the assignment was to pick a subset of the requirements to make an MVP, 
+and it is in my belief that favoriting, sending comics, and getting notificaitons is not required to make a minimally viable comic viewer application. 
+The reason for completing the tasks I chose to complete is either because it was (in my opinion) required to make an MVP, or that it was an insignificant amount of extra work.
+
+## More
+I will, however, continue development in another branch in order to complete more features.
+
+
 
 # How it works
 ## Downloader class
