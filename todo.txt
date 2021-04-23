@@ -20,10 +20,11 @@ send comics to others
 get notifications when a new comic is published
 	poke https://xkcd.com/atom.xml every hour?
 
-support multiple form factors
+				support multiple form factors
 	
 
 
 
 bugs: 
 encoding error on scraped text
+scraped text could use more sterilazation
