@@ -54,6 +54,10 @@ namespace xkcd_comics
 			GetAndPresentImageForCurrentID();
 		}
 
+		/*
+		 * Retrieves the image with ID = currentID, and all relevant information
+		 * and presents both the image and the information in the relevant showcase
+		 */
 		private void GetAndPresentImageForCurrentID()
 		{
 			if (Downloader.HasConnection())
@@ -78,8 +82,6 @@ namespace xkcd_comics
 
 					lb_explanation.Location = new Point(lb_explanation.Location.X, lb_transcript.Location.Y + lb_transcript.Height + 10);
 					lb_explanation.Text = "Explanation: " + data.explanation;
-
-
 				}
 				else
 				{
@@ -91,6 +93,7 @@ namespace xkcd_comics
 				lb_message.Text = "Error. No connection to https://xkcd.com.";
 			}
 		}
+
 		void OnProcessExit(object sender, EventArgs e)
 		{
 			Console.WriteLine("I'm out of here");
@@ -106,7 +109,6 @@ namespace xkcd_comics
 				}
 			}
 			catch { }
-			
 		}
 	}
 }

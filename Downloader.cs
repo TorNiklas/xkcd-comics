@@ -17,6 +17,7 @@ namespace xkcd_comics
 	static class Downloader
 	{
         public readonly static string downloadPath = Directory.GetCurrentDirectory() + "\\temp\\";
+
         /*
          * Checks if the application has internet access by pinging https://xkcd.com
          * Returns true of has connection, false otherwise
@@ -75,6 +76,10 @@ namespace xkcd_comics
 
 		}
 
+		/*
+		 * Takes an image ID as input and finds all nessecary information
+		 * Returns an Xkcd_data object with said data
+		 */
 		public static Xkcd_data GetDataByID(int id)
 		{
 			try
@@ -93,48 +98,30 @@ namespace xkcd_comics
 
 					title = new Regex("<td style=\"font-size: 20px; padding-bottom:10px\"><b>").Split(page)[1];
 					title = title.Split('<')[0];
-					Console.WriteLine(title);
+					//Console.WriteLine(title);
 
 					imgUrl = new Regex("src=\"(?=/wiki/images/)").Split(page)[1];
 					imgUrl = imgUrl.Split('"')[0];
 					imgUrl = "https://www.explainxkcd.com" + imgUrl;
-					Console.WriteLine(imgUrl);
+					//Console.WriteLine(imgUrl);
 
 					titleText = new Regex("Title text:</span>").Split(page)[1];
 					titleText = titleText.Split('<')[0];
-					Console.WriteLine(titleText);
+					//Console.WriteLine(titleText);
 
 					transcript = new Regex("Transcript\">edit</a><span class=\"mw-editsection-bracket\">]</span></span></h2>").Split(page)[1];
 					transcript = new Regex("<h2><span class=\"mw-headline").Split(transcript)[0];
 					transcript = new Regex("<.+?>").Replace(transcript, "");
-					Console.WriteLine(transcript);
+					//Console.WriteLine(transcript);
 
 					explanation = new Regex("Explanation\">edit</a><span class=\"mw-editsection-bracket\">]</span></span></h2>").Split(page)[1];
 					explanation = new Regex("<h2><span class=\"mw-headline\" id=\"Transcript\">Transcript").Split(explanation)[0];
 					explanation = new Regex("<.+?>").Replace(explanation, "");
-					Console.WriteLine(explanation);
+					//Console.WriteLine(explanation);
 
 					Xkcd_data data = new Xkcd_data(id, title, titleText, transcript, imgUrl, explanation);
 
-					//string jsonUrl = "https://xkcd.com/" + id + "/info.0.json";
-					//Console.WriteLine(jsonUrl);
-					//Console.WriteLine("Get json");
-					//var st = client.DownloadString(jsonUrl);
 					return data;
-
-
-					/*
-					 * Weirdest bug I thing I've ever come across.
-					 * Without this the request times out. Consistently and regardless of how long i wait.
-					 */
-					//Console.WriteLine("Start google");
-					//for (int i = 0; i < 20; i++)
-					//{
-					//	client.DownloadString("http://www.gooogle.com");
-					//	Console.WriteLine(i);
-					//}
-					Console.WriteLine("Finish google");
-
 				}
 			}
 			catch (Exception e)
@@ -144,6 +131,10 @@ namespace xkcd_comics
 			}
 		}
 
+		/*
+		 * Queries https://relevantxkcd.appspot.com with some search text
+		 * Returns the ID of the image that's the likeliest hit
+		 */
 		public static int Query(string search)
 		{
 			try
