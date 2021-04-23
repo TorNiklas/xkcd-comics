@@ -56,7 +56,7 @@ namespace xkcd_comics
 			image_showcase.Size = new Size(currentWidth - markX, currentHeight);
 
 			//details label
-			lb_details.MaximumSize = new Size(markX - 1, currentHeight - lb_details.Location.Y);
+			lb_details.MaximumSize = new Size(markX - 6, currentHeight - lb_details.Location.Y);
 		}
 
 		private void btn_search_Click(object sender, EventArgs e)

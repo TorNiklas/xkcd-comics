@@ -56,7 +56,7 @@ namespace xkcd_comics
 			// lb_message
 			// 
 			this.lb_message.AutoSize = true;
-			this.lb_message.Location = new System.Drawing.Point(12, 9);
+			this.lb_message.Location = new System.Drawing.Point(12, 7);
 			this.lb_message.Name = "lb_message";
 			this.lb_message.Size = new System.Drawing.Size(64, 13);
 			this.lb_message.TabIndex = 4;
@@ -64,27 +64,27 @@ namespace xkcd_comics
 			// 
 			// btn_prev
 			// 
-			this.btn_prev.Location = new System.Drawing.Point(118, 60);
+			this.btn_prev.Location = new System.Drawing.Point(12, 59);
 			this.btn_prev.Name = "btn_prev";
-			this.btn_prev.Size = new System.Drawing.Size(75, 23);
+			this.btn_prev.Size = new System.Drawing.Size(100, 23);
 			this.btn_prev.TabIndex = 3;
-			this.btn_prev.Text = "Previous";
+			this.btn_prev.Text = "<— Previous";
 			this.btn_prev.UseVisualStyleBackColor = true;
 			this.btn_prev.Click += new System.EventHandler(this.btn_prev_Click);
 			// 
 			// btn_next
 			// 
-			this.btn_next.Location = new System.Drawing.Point(118, 32);
+			this.btn_next.Location = new System.Drawing.Point(118, 59);
 			this.btn_next.Name = "btn_next";
-			this.btn_next.Size = new System.Drawing.Size(75, 23);
+			this.btn_next.Size = new System.Drawing.Size(100, 23);
 			this.btn_next.TabIndex = 2;
-			this.btn_next.Text = "Next";
+			this.btn_next.Text = "Next —>";
 			this.btn_next.UseVisualStyleBackColor = true;
 			this.btn_next.Click += new System.EventHandler(this.btn_next_Click);
 			// 
 			// btn_search
 			// 
-			this.btn_search.Location = new System.Drawing.Point(12, 60);
+			this.btn_search.Location = new System.Drawing.Point(118, 21);
 			this.btn_search.Name = "btn_search";
 			this.btn_search.Size = new System.Drawing.Size(100, 23);
 			this.btn_search.TabIndex = 1;
@@ -94,7 +94,7 @@ namespace xkcd_comics
 			// 
 			// tb_search
 			// 
-			this.tb_search.Location = new System.Drawing.Point(12, 34);
+			this.tb_search.Location = new System.Drawing.Point(12, 23);
 			this.tb_search.Name = "tb_search";
 			this.tb_search.Size = new System.Drawing.Size(100, 20);
 			this.tb_search.TabIndex = 0;
@@ -112,7 +112,7 @@ namespace xkcd_comics
 			// lb_details
 			// 
 			this.lb_details.AutoSize = true;
-			this.lb_details.Location = new System.Drawing.Point(0, 90);
+			this.lb_details.Location = new System.Drawing.Point(5, 101);
 			this.lb_details.Name = "lb_details";
 			this.lb_details.Size = new System.Drawing.Size(35, 13);
 			this.lb_details.TabIndex = 4;
