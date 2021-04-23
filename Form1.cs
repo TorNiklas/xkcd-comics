@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
-using System.Drawing;
 using Newtonsoft.Json.Linq;
 
 namespace xkcd_comics
