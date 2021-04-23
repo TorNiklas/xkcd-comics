@@ -1,14 +1,14 @@
 # xkcd-comics
 ## Features completed
-• browse through the comics,
-• see the comic details, including its description,
-• search for comics by the comic number as well as text,
-• get the comic explanation,
-• support multiple form factors
+• browse through the comics,  
+• see the comic details, including its description,  
+• search for comics by the comic number as well as text,  
+• get the comic explanation,  
+• support multiple form factors  
 
 ## Features not completed
-• favorite the comics, which would be available offline too,
-• send comics to others,
+• favorite the comics, which would be available offline too,  
+• send comics to others,  
 • get notifications when a new comic is published
 
 ## Rationale
@@ -39,7 +39,7 @@ GetAndPresentImageForCurrentID() retrieves the image with ID = currentID, and al
 FixFontSize() sets the font size of lb_details to fit within the window.
 
 ## Other information
-Files are deleted on application exit to not use unnessecary space
+Images are deleted on application exit to not use unnessecary space
 
 
 
