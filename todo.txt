@@ -14,8 +14,8 @@
 favorite the comics, which would be available offline too
 	imgs need to be downloaded anyway, keep them
 
-send comics to others
-	email service?
+				send comics to others
+					email service?
 
 get notifications when a new comic is published
 	poke https://xkcd.com/atom.xml every hour?
@@ -24,7 +24,10 @@ get notifications when a new comic is published
 	
 
 
+add note for what branch
+add note for .exe location
 
 bugs: 
 encoding error on scraped text
 scraped text could use more sterilazation
+id <1

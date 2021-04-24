@@ -13,37 +13,42 @@ using Newtonsoft.Json.Linq;
 
 namespace xkcd_comics
 {
-	public partial class Form1 : Form
+	public partial class Form_comics : Form
 	{
 		private int currentID = 1;
+		private Form_share shareForm;
 
-		//need this because (0, 0) != Form1.Location
+		//need this because (0, 0) != Form_comics.Location
 		private int currentHeight;
 		private int currentWidth;
 		private readonly int heightOffset = 39;
 		private readonly int widthOffset = 15;
 
-		public Form1()
+		public Form_comics()
 		{
 			AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
-			this.Resize += new EventHandler(Form1_Resize);
-			this.ResizeEnd += new EventHandler(Form1_ResizeEnd);
+			this.Resize += new EventHandler(OnResize);
+			this.ResizeEnd += new EventHandler(OnResizeEnd);
 			InitializeComponent();
 			lb_details.MaximumSize = new Size(image_showcase.Location.X, 0);
 			GetAndPresentImageForCurrentID();
 
 			//this is just to ensure that everything fits from the get go
-			Form1_Resize(null, null);
-			Form1_ResizeEnd(null, null);
+			OnResize(null, null);
+			OnResizeEnd(null, null);
+
+			shareForm = new Form_share(this);
+			//shareForm.Show();
+			//shareForm.BringToFront();
 		}
 
-		private void Form1_ResizeEnd(object sender, EventArgs e)
+		private void OnResizeEnd(object sender, EventArgs e)
 		{
-			//didn't do this in Form1_Resize because it causes lag because of the loop
+			//didn't do this in OnResize because it causes lag because of the loop
 			FixFontSize();
 		}
 
-		private void Form1_Resize(object sender, System.EventArgs e)
+		private void OnResize(object sender, System.EventArgs e)
 		{
 			currentHeight = this.Height - heightOffset;
 			currentWidth = this.Width - widthOffset;
@@ -73,6 +78,12 @@ namespace xkcd_comics
 				currentID = Downloader.Query(input);
 			}
 			GetAndPresentImageForCurrentID();
+		}
+
+		private void btn_share_Click(object sender, EventArgs e)
+		{
+			shareForm.Show();
+			shareForm.BringToFront();
 		}
 
 		private void btn_prev_Click(object sender, EventArgs e)
@@ -175,5 +186,11 @@ namespace xkcd_comics
 				lb_details.Font = new Font(lb_details.Font.FontFamily, best_size);
 			}
 		}
+
+		public int GetCurrentID()
+		{
+			return currentID;
+		}
+
 	}
 }
