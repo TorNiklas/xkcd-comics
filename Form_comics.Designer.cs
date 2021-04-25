@@ -30,6 +30,7 @@ namespace xkcd_comics
 		private void InitializeComponent()
 		{
 			this.pnl_controls = new System.Windows.Forms.Panel();
+			this.btn_share = new System.Windows.Forms.Button();
 			this.lb_message = new System.Windows.Forms.Label();
 			this.btn_prev = new System.Windows.Forms.Button();
 			this.btn_next = new System.Windows.Forms.Button();
@@ -37,13 +38,14 @@ namespace xkcd_comics
 			this.tb_search = new System.Windows.Forms.TextBox();
 			this.image_showcase = new System.Windows.Forms.PictureBox();
 			this.lb_details = new System.Windows.Forms.Label();
-			this.btn_share = new System.Windows.Forms.Button();
+			this.lb_latest_comic = new System.Windows.Forms.Label();
 			this.pnl_controls.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.image_showcase)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pnl_controls
 			// 
+			this.pnl_controls.Controls.Add(this.lb_latest_comic);
 			this.pnl_controls.Controls.Add(this.btn_share);
 			this.pnl_controls.Controls.Add(this.lb_message);
 			this.pnl_controls.Controls.Add(this.btn_prev);
@@ -54,6 +56,16 @@ namespace xkcd_comics
 			this.pnl_controls.Name = "pnl_controls";
 			this.pnl_controls.Size = new System.Drawing.Size(325, 133);
 			this.pnl_controls.TabIndex = 1;
+			// 
+			// btn_share
+			// 
+			this.btn_share.Location = new System.Drawing.Point(3, 107);
+			this.btn_share.Name = "btn_share";
+			this.btn_share.Size = new System.Drawing.Size(100, 23);
+			this.btn_share.TabIndex = 5;
+			this.btn_share.Text = "Share";
+			this.btn_share.UseVisualStyleBackColor = true;
+			this.btn_share.Click += new System.EventHandler(this.btn_share_Click);
 			// 
 			// lb_message
 			// 
@@ -120,15 +132,14 @@ namespace xkcd_comics
 			this.lb_details.TabIndex = 4;
 			this.lb_details.Text = "label1";
 			// 
-			// btn_share
+			// lb_latest_comic
 			// 
-			this.btn_share.Location = new System.Drawing.Point(3, 107);
-			this.btn_share.Name = "btn_share";
-			this.btn_share.Size = new System.Drawing.Size(100, 23);
-			this.btn_share.TabIndex = 5;
-			this.btn_share.Text = "Share";
-			this.btn_share.UseVisualStyleBackColor = true;
-			this.btn_share.Click += new System.EventHandler(this.btn_share_Click);
+			this.lb_latest_comic.AutoSize = true;
+			this.lb_latest_comic.Location = new System.Drawing.Point(236, 28);
+			this.lb_latest_comic.Name = "lb_latest_comic";
+			this.lb_latest_comic.Size = new System.Drawing.Size(107, 13);
+			this.lb_latest_comic.TabIndex = 6;
+			this.lb_latest_comic.Text = "Latest comic has ID: ";
 			// 
 			// Form_comics
 			// 
@@ -158,6 +169,7 @@ namespace xkcd_comics
 		private System.Windows.Forms.PictureBox image_showcase;
 		private System.Windows.Forms.Label lb_details;
 		private System.Windows.Forms.Button btn_share;
+		private System.Windows.Forms.Label lb_latest_comic;
 	}
 }
 

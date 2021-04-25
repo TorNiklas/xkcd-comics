@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
@@ -16,7 +17,10 @@ namespace xkcd_comics
 	public partial class Form_comics : Form
 	{
 		private int currentID = 1;
+		private int latestID;
 		private Form_share shareForm;
+		private Thread updateThread;
+		private bool exitThread = false;
 
 		//need this because (0, 0) != Form_comics.Location
 		private int currentHeight;
@@ -26,7 +30,7 @@ namespace xkcd_comics
 
 		public Form_comics()
 		{
-			AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+			this.FormClosing += new FormClosingEventHandler(OnFormClose);
 			this.Resize += new EventHandler(OnResize);
 			this.ResizeEnd += new EventHandler(OnResizeEnd);
 			InitializeComponent();
@@ -38,8 +42,9 @@ namespace xkcd_comics
 			OnResizeEnd(null, null);
 
 			shareForm = new Form_share(this);
-			//shareForm.Show();
-			//shareForm.BringToFront();
+
+			updateThread = new Thread(new ThreadStart(UpdateThreadFunction));
+			updateThread.Start();
 		}
 
 		private void OnResizeEnd(object sender, EventArgs e)
@@ -62,6 +67,8 @@ namespace xkcd_comics
 
 			//details label
 			lb_details.MaximumSize = new Size(markX - 6, currentHeight - lb_details.Location.Y);
+
+			lb_latest_comic.MaximumSize = new Size((markX - 6) - lb_latest_comic.Location.X, 0);
 		}
 
 		private void btn_search_Click(object sender, EventArgs e)
@@ -75,7 +82,11 @@ namespace xkcd_comics
 			}
 			else
 			{
-				currentID = Downloader.Query(input);
+				int response = Downloader.Query(input);
+				if(response >= 1 && response <= latestID)
+				{
+					currentID = response;
+				}
 			}
 			GetAndPresentImageForCurrentID();
 		}
@@ -88,22 +99,29 @@ namespace xkcd_comics
 
 		private void btn_prev_Click(object sender, EventArgs e)
 		{
-			currentID -= 1;
-			GetAndPresentImageForCurrentID();
+			if(currentID > 1)
+			{
+				currentID -= 1;
+				GetAndPresentImageForCurrentID();
+			}
 		}
 
 		private void btn_next_Click(object sender, EventArgs e)
 		{
-			currentID += 1;
-			GetAndPresentImageForCurrentID();
+			if(currentID < latestID)
+			{
+				currentID += 1;
+				GetAndPresentImageForCurrentID();
+			}
 		}
 
-		void OnProcessExit(object sender, EventArgs e)
+		void OnFormClose(object sender, EventArgs e)
 		{
 			Console.WriteLine("I'm out of here");
 
-			DirectoryInfo dir = new DirectoryInfo(Downloader.downloadPath);
+			exitThread = true;
 
+			DirectoryInfo dir = new DirectoryInfo(Downloader.downloadPath);
 			try
 			{
 				image_showcase.Image.Dispose();
@@ -113,6 +131,7 @@ namespace xkcd_comics
 				}
 			}
 			catch { }
+			Application.Exit();
 		}
 
 		/*
@@ -158,7 +177,7 @@ namespace xkcd_comics
 		/*
 		 * Sets the font size of lb_details to fit within the window.
 		 */
-		public void FixFontSize()
+		private void FixFontSize()
 		{
 			// Only bother if there's text.
 			string txt = lb_details.Text;
@@ -192,5 +211,53 @@ namespace xkcd_comics
 			return currentID;
 		}
 
+		/*
+		 * Function for the thread that will check for new comcis.
+		 * Ideally, i'd put in a check that disables the message box
+		 * on the first loop, but since it's unlikely that a new comic 
+		 * will be released when testing and reviewing the app, I left
+		 * it in.
+		 */
+		private void UpdateThreadFunction()
+		{
+			
+			while (!exitThread)
+			{
+				int late = Downloader.GetLatest();
+				if(late != 0)
+				{
+					if(latestID != late)
+					{
+						string message = "A new comic has been posted";
+						string caption = "New comic";
+						MessageBoxButtons buttons = MessageBoxButtons.OK;
+
+						MessageBox.Show(message, caption, buttons);
+					}
+
+
+					latestID = late;
+					if (lb_latest_comic.InvokeRequired)
+					{
+						MethodInvoker assignMethodControl = new MethodInvoker(UpdateLatest);
+						try
+						{
+							lb_latest_comic.Invoke(assignMethodControl);
+						}
+						catch { }
+					}
+					else
+					{
+						lb_latest_comic.Text = "Latest comic has ID: " + latestID;
+					}
+				}
+				Thread.Sleep(60 * 60 * 1000); //Sleep 1h
+			}
+		}
+
+		public void UpdateLatest()
+		{
+			lb_latest_comic.Text = "Latest comic has ID: " + latestID;
+		}
 	}
 }

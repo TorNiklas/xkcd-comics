@@ -11,6 +11,7 @@ using System.Drawing.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace xkcd_comics
 {
@@ -159,6 +160,31 @@ namespace xkcd_comics
 						return numeric;
 					}
 					return 0;
+				}
+			}
+			catch
+			{
+				return 0;
+			}
+		}
+
+		/*
+		 * Retrieves the latest comic and returns the ID
+		 */
+		public static int GetLatest()
+		{
+			try
+			{
+				using (WebClient client = new WebClient())
+				{
+					string url = "https://xkcd.com/atom.xml";
+					string response = client.DownloadString(url);
+
+					XmlDocument xmlDoc = new XmlDocument();
+					xmlDoc.LoadXml(response);
+					XmlNodeList ids = xmlDoc.GetElementsByTagName("id");
+
+					return Int32.Parse(ids[1].InnerText.Split('/')[3]);
 				}
 			}
 			catch
