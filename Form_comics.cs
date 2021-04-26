@@ -21,6 +21,7 @@ namespace xkcd_comics
 		private Form_share shareForm;
 		private Thread updateThread;
 		private bool exitThread = false;
+		private int favIndex = 0;
 
 		//need this because (0, 0) != Form_comics.Location
 		private int currentHeight;
@@ -35,7 +36,7 @@ namespace xkcd_comics
 			this.ResizeEnd += new EventHandler(OnResizeEnd);
 			InitializeComponent();
 			lb_details.MaximumSize = new Size(image_showcase.Location.X, 0);
-			GetAndPresentImageForCurrentID();
+			GetAndPresentImageForID(currentID);
 
 			//this is just to ensure that everything fits from the get go
 			OnResize(null, null);
@@ -75,20 +76,21 @@ namespace xkcd_comics
 		{
 			string input = tb_search.Text;
 			bool isNumeric = int.TryParse(input, out int numericInput);
+			int id = currentID;
 
 			if(isNumeric)
 			{
-				currentID = numericInput;
+				id = numericInput;
 			}
 			else
 			{
 				int response = Downloader.Query(input);
 				if(response >= 1 && response <= latestID)
 				{
-					currentID = response;
+					id = response;
 				}
 			}
-			GetAndPresentImageForCurrentID();
+			GetAndPresentImageForID(id);
 		}
 
 		private void btn_share_Click(object sender, EventArgs e)
@@ -99,20 +101,52 @@ namespace xkcd_comics
 
 		private void btn_prev_Click(object sender, EventArgs e)
 		{
-			if(currentID > 1)
+			if (!cb_online.Checked)
 			{
-				currentID -= 1;
-				GetAndPresentImageForCurrentID();
+				int[] favorites = LocalFiles.GetFavorites();
+				if (favorites.Length == 0) { return; }
+
+				favIndex--;
+				favIndex = (favIndex>0) ? favIndex-1 : favorites.Length;
+				GetAndPresentImageForID(favorites[favIndex]);
+			}
+			else if (currentID > 1)
+			{
+				GetAndPresentImageForID(currentID - 1);
 			}
 		}
 
 		private void btn_next_Click(object sender, EventArgs e)
 		{
-			if(currentID < latestID)
+			if(!cb_online.Checked)
+            {
+				int[] favorites = LocalFiles.GetFavorites();
+				if(favorites.Length == 0) { return; }
+
+				favIndex = (favIndex + 1) % favorites.Length;
+				GetAndPresentImageForID(favorites[favIndex]);
+            }
+			else if(currentID < latestID)
 			{
-				currentID += 1;
-				GetAndPresentImageForCurrentID();
+				GetAndPresentImageForID(currentID + 1);
 			}
+		}
+
+		private void btn_favorite_Click(object sender, EventArgs e)
+		{
+			if(LocalFiles.GetFavorites().Contains(currentID))
+            {
+				LocalFiles.Unfavorite(currentID);
+            }
+			else
+            {
+				LocalFiles.Favorite(currentID);
+			}
+		}
+
+		private void cb_online_CheckedChanged(object sender, EventArgs e)
+		{
+
 		}
 
 		void OnFormClose(object sender, EventArgs e)
@@ -135,43 +169,69 @@ namespace xkcd_comics
 		}
 
 		/*
-		 * Retrieves the image with ID = currentID, and all relevant information
+		 * Retrieves the image with ID id, and all relevant information
 		 * and presents both the image and the information in the relevant showcase
 		 */
-		private void GetAndPresentImageForCurrentID()
+		private void GetAndPresentImageForID(int id)
 		{
-			if (Downloader.HasConnection())
-			{
-				Xkcd_data data = Downloader.GetDataByID(currentID);
+			bool isFavorite = LocalFiles.GetFavorites().Contains(id);
+            bool isDownloaded = LocalFiles.GetNonFavorites().Contains(id);
 
-				if (Downloader.GetImageByUrl(currentID+"", data.imgUrl))
+			if (cb_online.Checked)
+			{
+				Xkcd_data data = Downloader.GetDataByID(id);
+
+				if (Downloader.GetImageByUrl(id + "", data.imgUrl))
 				{
 					if (image_showcase.Image != null)
 					{
 						image_showcase.Image.Dispose();
 					}
 					string dlPath = Downloader.downloadPath;
-					Bitmap img = new Bitmap(dlPath + currentID);
+					Bitmap img = new Bitmap(dlPath + id);
 					image_showcase.Image = (Image)img;
 
 					lb_details.Text = "";
-					lb_details.Text += "ID: "			+ data.id			+ "\n\n";
-					lb_details.Text += "Title: "		+ data.title		+ "\n\n";
-					lb_details.Text += "Title text: "	+ data.titleText	+ "\n\n";
-					lb_details.Text += "Transcript: "	+ data.transcript	+ "\n";
-					lb_details.Text += "Explanation: "	+ data.explanation;
+					lb_details.Text += "ID: " + data.id + "\n\n";
+					lb_details.Text += "Title: " + data.title + "\n\n";
+					lb_details.Text += "Title text: " + data.titleText + "\n\n";
+					lb_details.Text += "Transcript: " + data.transcript + "\n";
+					lb_details.Text += "Explanation: " + data.explanation;
+
+					currentID = id;
 
 					FixFontSize();
 				}
-				else
+			}
+			else if (isFavorite)
+			{
+				if (image_showcase.Image != null)
 				{
-					lb_message.Text = "Error. Something went wrong when retrieving image.";
+					image_showcase.Image.Dispose();
 				}
+				string filePath = LocalFiles.favDir;
+				Bitmap img = new Bitmap(filePath + id);
+				image_showcase.Image = (Image)img;
+				lb_details.Text = "N/A";
+				currentID = id;
+			}
+			else if(isDownloaded)
+            {
+				if (image_showcase.Image != null)
+				{
+					image_showcase.Image.Dispose();
+				}
+				string filePath = LocalFiles.tempDir;
+				Bitmap img = new Bitmap(filePath + id);
+				image_showcase.Image = (Image)img;
+				lb_details.Text = "N/A";
+				currentID = id;
 			}
 			else
-			{
-				lb_message.Text = "Error. No connection to https://xkcd.com.";
-			}
+            {
+				lb_message.Text = "Error. No connection.";
+            }
+			
 		}
 
 		/*
@@ -186,7 +246,7 @@ namespace xkcd_comics
 				int best_size = 100;
 				int maxHeight = currentHeight - lb_details.Location.Y;
 
-				for (int i = 1; i <= 26; i++)
+				for (int i = 5; i <= 26; i++)
 				{
 					using (Font test_font = new Font(lb_details.Font.FontFamily, i))
 					{
@@ -251,7 +311,7 @@ namespace xkcd_comics
 						lb_latest_comic.Text = "Latest comic has ID: " + latestID;
 					}
 				}
-				Thread.Sleep(60 * 60 * 1000); //Sleep 1h
+				Thread.Sleep(10 * 1000); //Sleep 10 sec
 			}
 		}
 
@@ -259,5 +319,5 @@ namespace xkcd_comics
 		{
 			lb_latest_comic.Text = "Latest comic has ID: " + latestID;
 		}
-	}
+    }
 }

@@ -79,6 +79,7 @@
     <Compile Include="Form_share.Designer.cs">
       <DependentUpon>Form_share.cs</DependentUpon>
     </Compile>
+    <Compile Include="LocalFiles.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Xkcd_data.cs" />

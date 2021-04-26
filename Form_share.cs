@@ -53,8 +53,11 @@ namespace xkcd_comics
 		}
 		private void OnClose(object sender, FormClosingEventArgs e)
 		{
-			this.Hide();
-			e.Cancel = true;
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+				this.Hide();
+				e.Cancel = true;
+            }
 		}
 	}
 }

@@ -17,11 +17,12 @@ namespace xkcd_comics
 {
 	static class Downloader
 	{
-        public readonly static string downloadPath = Directory.GetCurrentDirectory() + "\\temp\\";
+		public readonly static string downloadPath = LocalFiles.tempDir;
 
         /*
          * Checks if the application has internet access by pinging https://xkcd.com
          * Returns true of has connection, false otherwise
+         * currently unstable and unused
          */
         public static bool HasConnection(int timeoutMs = 10000)
         {
@@ -61,7 +62,7 @@ namespace xkcd_comics
 					{
 						bitmap.Save(downloadPath + filename, ImageFormat.Png);
 					}
-
+					
 					stream.Flush();
                     stream.Close();
                     client.Dispose();

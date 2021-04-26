@@ -11,8 +11,8 @@
 				get the comic explanation
 					https://www.explainxkcd.com/wiki/index.php/614 -> scrape explanation
 
-favorite the comics, which would be available offline too
-	imgs need to be downloaded anyway, keep them
+				favorite the comics, which would be available offline too
+					imgs need to be downloaded anyway, keep them
 
 				send comics to others
 					email service?
@@ -27,6 +27,7 @@ favorite the comics, which would be available offline too
 add note for what branch
 add note for .exe location
 
-bugs: 
+bugs/todo: 
 encoding error on scraped text
 scraped text could use more sterilazation
+don't jump 2 when fav is deleted
