@@ -30,6 +30,7 @@ namespace xkcd_comics
 		private void InitializeComponent()
 		{
             this.pnl_controls = new System.Windows.Forms.Panel();
+            this.cb_online = new System.Windows.Forms.CheckBox();
             this.btn_favorite = new System.Windows.Forms.Button();
             this.lb_latest_comic = new System.Windows.Forms.Label();
             this.btn_share = new System.Windows.Forms.Button();
@@ -40,9 +41,10 @@ namespace xkcd_comics
             this.tb_search = new System.Windows.Forms.TextBox();
             this.image_showcase = new System.Windows.Forms.PictureBox();
             this.lb_details = new System.Windows.Forms.Label();
-            this.cb_online = new System.Windows.Forms.CheckBox();
+            this.pnl_details = new System.Windows.Forms.Panel();
             this.pnl_controls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.image_showcase)).BeginInit();
+            this.pnl_details.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnl_controls
@@ -60,6 +62,19 @@ namespace xkcd_comics
             this.pnl_controls.Name = "pnl_controls";
             this.pnl_controls.Size = new System.Drawing.Size(325, 133);
             this.pnl_controls.TabIndex = 1;
+            // 
+            // cb_online
+            // 
+            this.cb_online.AutoSize = true;
+            this.cb_online.Checked = true;
+            this.cb_online.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_online.Location = new System.Drawing.Point(216, 23);
+            this.cb_online.Name = "cb_online";
+            this.cb_online.Size = new System.Drawing.Size(85, 17);
+            this.cb_online.TabIndex = 8;
+            this.cb_online.Text = "Online mode";
+            this.cb_online.UseVisualStyleBackColor = true;
+            this.cb_online.CheckedChanged += new System.EventHandler(this.cb_online_CheckedChanged);
             // 
             // btn_favorite
             // 
@@ -149,40 +164,37 @@ namespace xkcd_comics
             // lb_details
             // 
             this.lb_details.AutoSize = true;
-            this.lb_details.Location = new System.Drawing.Point(0, 136);
+            this.lb_details.Location = new System.Drawing.Point(-3, 0);
             this.lb_details.Name = "lb_details";
             this.lb_details.Size = new System.Drawing.Size(35, 13);
             this.lb_details.TabIndex = 4;
             this.lb_details.Text = "label1";
             // 
-            // cb_online
+            // pnl_details
             // 
-            this.cb_online.AutoSize = true;
-            this.cb_online.Checked = true;
-            this.cb_online.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_online.Location = new System.Drawing.Point(216, 23);
-            this.cb_online.Name = "cb_online";
-            this.cb_online.Size = new System.Drawing.Size(85, 17);
-            this.cb_online.TabIndex = 8;
-            this.cb_online.Text = "Online mode";
-            this.cb_online.UseVisualStyleBackColor = true;
-            this.cb_online.CheckedChanged += new System.EventHandler(this.cb_online_CheckedChanged);
+            this.pnl_details.AutoScroll = true;
+            this.pnl_details.Controls.Add(this.lb_details);
+            this.pnl_details.Location = new System.Drawing.Point(0, 139);
+            this.pnl_details.Name = "pnl_details";
+            this.pnl_details.Size = new System.Drawing.Size(325, 100);
+            this.pnl_details.TabIndex = 5;
             // 
             // Form_comics
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 800);
+            this.Controls.Add(this.pnl_details);
             this.Controls.Add(this.image_showcase);
-            this.Controls.Add(this.lb_details);
             this.Controls.Add(this.pnl_controls);
             this.Name = "Form_comics";
             this.Text = "Form_comics";
             this.pnl_controls.ResumeLayout(false);
             this.pnl_controls.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.image_showcase)).EndInit();
+            this.pnl_details.ResumeLayout(false);
+            this.pnl_details.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
 		}
 
@@ -199,6 +211,7 @@ namespace xkcd_comics
 		private System.Windows.Forms.Label lb_latest_comic;
         private System.Windows.Forms.Button btn_favorite;
         private System.Windows.Forms.CheckBox cb_online;
+        private System.Windows.Forms.Panel pnl_details;
     }
 }
 

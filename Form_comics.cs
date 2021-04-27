@@ -33,25 +33,17 @@ namespace xkcd_comics
 		{
 			this.FormClosing += new FormClosingEventHandler(OnFormClose);
 			this.Resize += new EventHandler(OnResize);
-			this.ResizeEnd += new EventHandler(OnResizeEnd);
 			InitializeComponent();
-			lb_details.MaximumSize = new Size(image_showcase.Location.X, 0);
+			lb_details.MaximumSize = new Size(image_showcase.Location.X-10, 0);
 			GetAndPresentImageForID(currentID);
 
 			//this is just to ensure that everything fits from the get go
 			OnResize(null, null);
-			OnResizeEnd(null, null);
 
 			shareForm = new Form_share(this);
 
 			updateThread = new Thread(new ThreadStart(UpdateThreadFunction));
 			updateThread.Start();
-		}
-
-		private void OnResizeEnd(object sender, EventArgs e)
-		{
-			//didn't do this in OnResize because it causes lag because of the loop
-			FixFontSize();
 		}
 
 		private void OnResize(object sender, System.EventArgs e)
@@ -66,8 +58,9 @@ namespace xkcd_comics
 			image_showcase.Location = new Point(markX, 0);
 			image_showcase.Size = new Size(currentWidth - markX, currentHeight);
 
-			//details label
-			lb_details.MaximumSize = new Size(markX - 6, currentHeight - lb_details.Location.Y);
+			//details
+			pnl_details.Size = new Size(markX, currentHeight - pnl_details.Location.Y);
+			lb_details.MaximumSize = new Size(pnl_details.Size.Width - 15, currentHeight - lb_details.Location.Y);
 
 			lb_latest_comic.MaximumSize = new Size((markX - 6) - lb_latest_comic.Location.X, 0);
 		}
@@ -206,7 +199,7 @@ namespace xkcd_comics
 
 					currentID = id;
 
-					FixFontSize();
+					//FixFontSize();
 				}
 			}
 			else if (isFavorite)
@@ -252,7 +245,7 @@ namespace xkcd_comics
 				int best_size = 100;
 				int maxHeight = currentHeight - lb_details.Location.Y;
 
-				for (int i = 5; i <= 26; i++)
+				for (int i = 9; i <= 26; i++)
 				{
 					using (Font test_font = new Font(lb_details.Font.FontFamily, i))
 					{
@@ -297,8 +290,12 @@ namespace xkcd_comics
 						string message = "A new comic has been posted";
 						string caption = "New comic";
 						MessageBoxButtons buttons = MessageBoxButtons.OK;
+						var icon = MessageBoxIcon.None;
+						MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1;
 
-						MessageBox.Show(message, caption, buttons);
+						//Always on top
+						MessageBox.Show(message, caption, buttons, icon,
+							defaultButton, (MessageBoxOptions)0x40000);
 					}
 
 
