@@ -28,6 +28,4 @@ add note for what branch
 add note for .exe location
 
 bugs/todo: 
-enter for search
 don't jump 2 when fav is deleted
-rename fav button on unfav

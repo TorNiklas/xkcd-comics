@@ -33,7 +33,11 @@ namespace xkcd_comics
 		{
 			this.FormClosing += new FormClosingEventHandler(OnFormClose);
 			this.Resize += new EventHandler(OnResize);
+
 			InitializeComponent();
+
+			tb_search.KeyDown += new KeyEventHandler(OnTbKeypress);
+
 			lb_details.MaximumSize = new Size(image_showcase.Location.X-10, 0);
 			GetAndPresentImageForID(currentID);
 
@@ -138,6 +142,16 @@ namespace xkcd_comics
             {
 				LocalFiles.Favorite(currentID);
 				btn_favorite.Text = "Unfavorite";
+			}
+		}
+
+		private void OnTbKeypress(object sender, KeyEventArgs e)
+		{
+			if(e.KeyValue == 13) //enter
+            {
+				btn_search_Click(null, null);
+				e.Handled = true;
+				e.SuppressKeyPress = true; //to stop the ding sound, and we don't need enter to do anything else
 			}
 		}
 
@@ -301,13 +315,10 @@ namespace xkcd_comics
 					{
 						string message = "A new comic has been posted";
 						string caption = "New comic";
-						MessageBoxButtons buttons = MessageBoxButtons.OK;
-						var icon = MessageBoxIcon.None;
-						MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1;
 
 						//Always on top
-						MessageBox.Show(message, caption, buttons, icon,
-							defaultButton, (MessageBoxOptions)0x40000);
+						MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.None, 
+							MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
 					}
 
 
