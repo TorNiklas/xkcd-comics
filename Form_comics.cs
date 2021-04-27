@@ -1,16 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing.Imaging;
-using Newtonsoft.Json.Linq;
 
 namespace xkcd_comics
 {
@@ -134,17 +128,16 @@ namespace xkcd_comics
 		{
 			if(LocalFiles.GetFavorites().Contains(currentID))
             {
+				int id = currentID;
 				if(cb_online.Checked)
                 {
-					LocalFiles.Unfavorite(currentID);
 					btn_favorite.Text = "Favorite";
                 }
 				else
                 {
-					int id = currentID;
 					btn_next_Click(null, null);
-					LocalFiles.Unfavorite(id);
-                }
+				}
+				LocalFiles.Unfavorite(id);
 			}
 			else
             {
@@ -161,11 +154,6 @@ namespace xkcd_comics
 				e.Handled = true;
 				e.SuppressKeyPress = true; //to stop the ding sound, and we don't need enter to do anything else
 			}
-		}
-
-		private void cb_online_CheckedChanged(object sender, EventArgs e)
-		{
-
 		}
 
 		void OnFormClose(object sender, EventArgs e)

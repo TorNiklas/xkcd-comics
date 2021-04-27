@@ -74,7 +74,6 @@ namespace xkcd_comics
             this.cb_online.TabIndex = 8;
             this.cb_online.Text = "Online mode";
             this.cb_online.UseVisualStyleBackColor = true;
-            this.cb_online.CheckedChanged += new System.EventHandler(this.cb_online_CheckedChanged);
             // 
             // btn_favorite
             // 
