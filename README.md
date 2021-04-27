@@ -17,7 +17,7 @@ and it is in my belief that favoriting, sending comics, and getting notificaiton
 The reason for completing the tasks I chose to complete is either because it was (in my opinion) required to make an MVP, or that it was an insignificant amount of extra work.
 
 ## More
-I will, however, continue development in another branch in order to complete more features.
+I will, however, continue development in another branch in order to complete more features. See the branch 'more' for this.
 
 
 
@@ -39,8 +39,7 @@ GetAndPresentImageForCurrentID() retrieves the image with ID = currentID, and al
 FixFontSize() sets the font size of lb_details to fit within the window.
 
 ## Other information
-Images are deleted on application exit to not use unnessecary space
-
+Images are deleted on application exit to not use unnessecary space. If you want to look at the compiled .exe, you can find it in \bin\Debug
 
 
 
