@@ -13,28 +13,6 @@ namespace xkcd_comics
 		public readonly static string downloadPath = LocalFiles.tempDir;
 
         /*
-         * Checks if the application has internet access by pinging https://xkcd.com
-         * Returns true of has connection, false otherwise
-         * currently unstable and unused
-         */
-        public static bool HasConnection(int timeoutMs = 10000)
-        {
-            try
-            {
-                string url = "https://xkcd.com";
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.KeepAlive = false;
-                request.Timeout = timeoutMs;
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /*
          * Gets and saves an image by url
          * Return true if everything went well, false otherwise
          */

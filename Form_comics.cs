@@ -25,23 +25,24 @@ namespace xkcd_comics
 
 		public Form_comics()
 		{
-			this.FormClosing += new FormClosingEventHandler(OnFormClose);
-			this.Resize += new EventHandler(OnResize);
 
 			InitializeComponent();
 
+			//Event handlers
+			this.FormClosing += new FormClosingEventHandler(OnFormClose);
+			this.Resize += new EventHandler(OnResize);
 			tb_search.KeyDown += new KeyEventHandler(OnTbKeypress);
 
+			//Init
 			lb_details.MaximumSize = new Size(image_showcase.Location.X-10, 0);
 			GetAndPresentImageForID(currentID);
-
+			shareForm = new Form_share(this);
 			pnl_details.Location = new Point(6, pnl_details.Location.Y);
 
 			//this is just to ensure that everything fits from the get go
 			OnResize(null, null);
 
-			shareForm = new Form_share(this);
-
+			//Thread
 			updateThread = new Thread(new ThreadStart(UpdateThreadFunction));
 			updateThread.Start();
 		}
@@ -51,6 +52,7 @@ namespace xkcd_comics
 			currentHeight = this.Height - heightOffset;
 			currentWidth = this.Width - widthOffset;
 
+			//divider between image showcase and controls/details panel
 			int markX = (int)(currentWidth * 0.3);
 			markX = markX > pnl_controls.Width ? markX : pnl_controls.Width;
 
@@ -158,8 +160,6 @@ namespace xkcd_comics
 
 		void OnFormClose(object sender, EventArgs e)
 		{
-			Console.WriteLine("I'm out of here");
-
 			exitThread = true;
 
 			DirectoryInfo dir = new DirectoryInfo(Downloader.downloadPath);
@@ -212,8 +212,6 @@ namespace xkcd_comics
 					lb_details.Text = text;
 
 					currentID = id;
-
-					//FixFontSize();
 				}
 			}
 			else if (isFavorite)
@@ -254,38 +252,6 @@ namespace xkcd_comics
 				btn_favorite.Text = "Favorite";
 			}
 
-		}
-
-		/*
-		 * Sets the font size of lb_details to fit within the window.
-		 */
-		private void FixFontSize()
-		{
-			// Only bother if there's text.
-			string txt = lb_details.Text;
-			if (txt.Length > 0)
-			{
-				int best_size = 100;
-				int maxHeight = currentHeight - lb_details.Location.Y;
-
-				for (int i = 9; i <= 26; i++)
-				{
-					using (Font test_font = new Font(lb_details.Font.FontFamily, i))
-					{
-						// See how much space the text would
-						// need, specifying a maximum width.
-						lb_details.Font = test_font;
-						if (lb_details.Height >= maxHeight)
-						{
-							best_size = i - 1;
-							break;
-						}
-					}
-				}
-
-				// Use that font size.
-				lb_details.Font = new Font(lb_details.Font.FontFamily, best_size);
-			}
 		}
 
 		public int GetCurrentID()
