@@ -105,8 +105,7 @@ namespace xkcd_comics
 				int[] favorites = LocalFiles.GetFavorites();
 				if (favorites.Length == 0) { return; }
 
-				favIndex--;
-				favIndex = (favIndex>0) ? favIndex-1 : favorites.Length;
+				favIndex = (favIndex>0) ? favIndex-1 : favorites.Length-1;
 				GetAndPresentImageForID(favorites[favIndex]);
 			}
 			else if (currentID > 1)
@@ -135,8 +134,17 @@ namespace xkcd_comics
 		{
 			if(LocalFiles.GetFavorites().Contains(currentID))
             {
-				LocalFiles.Unfavorite(currentID);
-				btn_favorite.Text = "Favorite";
+				if(cb_online.Checked)
+                {
+					LocalFiles.Unfavorite(currentID);
+					btn_favorite.Text = "Favorite";
+                }
+				else
+                {
+					int id = currentID;
+					btn_next_Click(null, null);
+					LocalFiles.Unfavorite(id);
+                }
 			}
 			else
             {
@@ -215,14 +223,6 @@ namespace xkcd_comics
 
 					lb_details.Text = text;
 
-					if(LocalFiles.GetFavorites().Contains(id))
-                    {
-						btn_favorite.Text = "Unfavorite";
-                    }
-					else
-                    {
-						btn_favorite.Text = "Favorite";
-                    }
 					currentID = id;
 
 					//FixFontSize();
@@ -256,7 +256,16 @@ namespace xkcd_comics
             {
 				lb_message.Text = "Error. No connection.";
             }
-			
+
+			if (LocalFiles.GetFavorites().Contains(id))
+			{
+				btn_favorite.Text = "Unfavorite";
+			}
+			else
+			{
+				btn_favorite.Text = "Favorite";
+			}
+
 		}
 
 		/*

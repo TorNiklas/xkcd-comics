@@ -28,4 +28,3 @@ add note for what branch
 add note for .exe location
 
 bugs/todo: 
-don't jump 2 when fav is deleted
