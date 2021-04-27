@@ -6,7 +6,7 @@ namespace xkcd_comics
 {
 	public partial class Form_share : Form
 	{
-		private Form_comics parent;
+		private readonly Form_comics parent;
 		public Form_share(Form_comics parent)
 		{
 			InitializeComponent();
@@ -15,19 +15,21 @@ namespace xkcd_comics
 		}
 
 		//Makes and sends an email with the given information
-		private void btn_share_Click(object sender, EventArgs e)
+		private void Btn_share_Click(object sender, EventArgs e)
 		{
 			try
 			{
-				//Config
-				EmailConfiguration config = new EmailConfiguration();
-				config.SmtpPort = Int32.Parse(tb_sender_smtp_port.Text);
-				config.SmtpServer = tb_sender_smtp_sever.Text;
-				config.SmtpUsername = tb_sender_email.Text;
-				config.SmtpPassword = tb_sender_password.Text;
+                //Config
+                EmailConfiguration config = new EmailConfiguration
+                {
+                    SmtpPort = Int32.Parse(tb_sender_smtp_port.Text),
+                    SmtpServer = tb_sender_smtp_sever.Text,
+                    SmtpUsername = tb_sender_email.Text,
+                    SmtpPassword = tb_sender_password.Text
+                };
 
-				//Setup
-				EmailService service = new EmailService(config);
+                //Setup
+                EmailService service = new EmailService(config);
 				EmailMessage msg = new EmailMessage();
 				EmailAddress toAdress = new EmailAddress();
 				EmailAddress fromAdress = new EmailAddress();
@@ -44,7 +46,7 @@ namespace xkcd_comics
 				service.Send(msg);
 				lb_warning.Text = "";
 			}
-			catch (Exception ex)
+			catch
 			{
 				lb_warning.Text = "Something went wrong when sending the email.";
 			}

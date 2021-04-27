@@ -66,7 +66,7 @@ namespace xkcd_comics
 			{
 				return false;
 			}
-			return ReferenceEquals(this, obj) ? true : obj.GetType() == GetType() && Equals((EmailAddress)obj);
+			return ReferenceEquals(this, obj) || obj.GetType() == GetType() && Equals((EmailAddress)obj);
 		}
 
 		public override int GetHashCode()

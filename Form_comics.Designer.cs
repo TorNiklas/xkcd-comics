@@ -83,7 +83,7 @@ namespace xkcd_comics
             this.btn_favorite.TabIndex = 7;
             this.btn_favorite.Text = "Favorite";
             this.btn_favorite.UseVisualStyleBackColor = true;
-            this.btn_favorite.Click += new System.EventHandler(this.btn_favorite_Click);
+            this.btn_favorite.Click += new System.EventHandler(this.Btn_favorite_Click);
             // 
             // lb_latest_comic
             // 
@@ -102,7 +102,7 @@ namespace xkcd_comics
             this.btn_share.TabIndex = 5;
             this.btn_share.Text = "Share";
             this.btn_share.UseVisualStyleBackColor = true;
-            this.btn_share.Click += new System.EventHandler(this.btn_share_Click);
+            this.btn_share.Click += new System.EventHandler(this.Btn_share_Click);
             // 
             // lb_message
             // 
@@ -121,7 +121,7 @@ namespace xkcd_comics
             this.btn_prev.TabIndex = 3;
             this.btn_prev.Text = "<— Previous";
             this.btn_prev.UseVisualStyleBackColor = true;
-            this.btn_prev.Click += new System.EventHandler(this.btn_prev_Click);
+            this.btn_prev.Click += new System.EventHandler(this.Btn_prev_Click);
             // 
             // btn_next
             // 
@@ -131,7 +131,7 @@ namespace xkcd_comics
             this.btn_next.TabIndex = 2;
             this.btn_next.Text = "Next —>";
             this.btn_next.UseVisualStyleBackColor = true;
-            this.btn_next.Click += new System.EventHandler(this.btn_next_Click);
+            this.btn_next.Click += new System.EventHandler(this.Btn_next_Click);
             // 
             // btn_search
             // 
@@ -141,7 +141,7 @@ namespace xkcd_comics
             this.btn_search.TabIndex = 1;
             this.btn_search.Text = "Search";
             this.btn_search.UseVisualStyleBackColor = true;
-            this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
+            this.btn_search.Click += new System.EventHandler(this.Btn_search_Click);
             // 
             // tb_search
             // 

@@ -24,7 +24,4 @@
 	
 
 
-add note for what branch
-add note for .exe location
-
 bugs/todo: 

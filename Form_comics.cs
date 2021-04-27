@@ -12,8 +12,8 @@ namespace xkcd_comics
 	{
 		private int currentID = 1;
 		private int latestID;
-		private Form_share shareForm;
-		private Thread updateThread;
+		private readonly Form_share shareForm;
+		private readonly Thread updateThread;
 		private bool exitThread = false;
 		private int favIndex = 0;
 
@@ -67,7 +67,7 @@ namespace xkcd_comics
 			lb_latest_comic.MaximumSize = new Size((markX - 6) - lb_latest_comic.Location.X, 0);
 		}
 
-		private void btn_search_Click(object sender, EventArgs e)
+		private void Btn_search_Click(object sender, EventArgs e)
 		{
 			string input = tb_search.Text;
 			bool isNumeric = int.TryParse(input, out int numericInput);
@@ -88,13 +88,13 @@ namespace xkcd_comics
 			GetAndPresentImageForID(id);
 		}
 
-		private void btn_share_Click(object sender, EventArgs e)
+		private void Btn_share_Click(object sender, EventArgs e)
 		{
 			shareForm.Show();
 			shareForm.BringToFront();
 		}
 
-		private void btn_prev_Click(object sender, EventArgs e)
+		private void Btn_prev_Click(object sender, EventArgs e)
 		{
 			if (!cb_online.Checked)
 			{
@@ -110,7 +110,7 @@ namespace xkcd_comics
 			}
 		}
 
-		private void btn_next_Click(object sender, EventArgs e)
+		private void Btn_next_Click(object sender, EventArgs e)
 		{
 			if(!cb_online.Checked)
             {
@@ -126,7 +126,7 @@ namespace xkcd_comics
 			}
 		}
 
-		private void btn_favorite_Click(object sender, EventArgs e)
+		private void Btn_favorite_Click(object sender, EventArgs e)
 		{
 			if(LocalFiles.GetFavorites().Contains(currentID))
             {
@@ -137,7 +137,7 @@ namespace xkcd_comics
                 }
 				else
                 {
-					btn_next_Click(null, null);
+					Btn_next_Click(null, null);
 				}
 				LocalFiles.Unfavorite(id);
 			}
@@ -152,7 +152,7 @@ namespace xkcd_comics
 		{
 			if(e.KeyValue == 13) //enter
             {
-				btn_search_Click(null, null);
+				Btn_search_Click(null, null);
 				e.Handled = true;
 				e.SuppressKeyPress = true; //to stop the ding sound, and we don't need enter to do anything else
 			}

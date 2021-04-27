@@ -5,41 +5,41 @@
 • search for comics by the comic number as well as text,  
 • get the comic explanation,  
 • support multiple form factors  
-
-## Features not completed
 • favorite the comics, which would be available offline too,  
 • send comics to others,  
-• get notifications when a new comic is published
-
-## Rationale
-The reason I've only completed some of the tasks is that the assignment was to pick a subset of the requirements to make an MVP, 
-and it is in my belief that favoriting, sending comics, and getting notificaitons is not required to make a minimally viable comic viewer application. 
-The reason for completing the tasks I chose to complete is either because it was (in my opinion) required to make an MVP, or that it was an insignificant amount of extra work.
-
-## More
-I will, however, continue development in another branch in order to complete more features.
-
-
+• get notifications when a new comic is published  
 
 # How it works
 ## Downloader class
 Handles everything with downloading and internet.
 GetImageByUrl() downloads the given image and saves it by the given name and returns a boolean that signifies an (un)successful operation.
-GetImageByID() is much the same. It finds the image url and calls GetImageByUrl. Returns the same boolean.
-HasConnection() is self explanatory. Checks connection to https://xkcd.com.
+GetImageDataByID() takes an image ID as input and finds all nessecary information. Returns an Xkcd_data object with said data. 
+HasConnection() was unstable and has been deleted.
 Query() queries https://relevantxkcd.appspot.com for the most relevant comics to a search term, and returns the ID of the best match.
+GetLatest() retrieves the ID of the latest comic.
+
+## Email classes
+Core and support classes for sending emails. Everything should be self explanatory. Classes are copied from another project of mine.
+
+## Form_comics class
+Where everything happens.
+Event handlers should be self-explanatory.
+GetAndPresentImageForID() retrieves the image with ID id, and all relevant information (if online), and presents both in the relevant showcase.
+UpdateThreadFunction() and UpdateLatest() uses the Downloader class to check for and notify the user of the latest comic.
+
+## Form_share class
+Form for sharing comics by email. Email account might need configuring to let unknown apps handle emails. 
+
+## LocalFiles class
+Handles everything to do with files on the local sysyem, (un)favoriting, etc.
+Favorite(), Unfavorite(), and GetFavorites() should all be self-explanatory.
+GetNonFavorites() returns an array of the IDs of all temporarily stored images.
 
 ## Xkcd_data class
 Just a place to store data about a specific comic.
 
-## Form1 class
-Where everything happens.
-Event handlers should be self-explanatory.
-GetAndPresentImageForCurrentID() retrieves the image with ID = currentID, and all relevant information, and presents both the image and the information in the relevant showcase.
-FixFontSize() sets the font size of lb_details to fit within the window.
-
 ## Other information
-Images are deleted on application exit to not use unnessecary space
+Non-favorited images are deleted on application exit to not use unnessecary space
 
 
 

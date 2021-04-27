@@ -100,7 +100,7 @@ namespace xkcd_comics
             this.btn_share.TabIndex = 6;
             this.btn_share.Text = "Share";
             this.btn_share.UseVisualStyleBackColor = true;
-            this.btn_share.Click += new System.EventHandler(this.btn_share_Click);
+            this.btn_share.Click += new System.EventHandler(this.Btn_share_Click);
             // 
             // lb_warning
             // 
