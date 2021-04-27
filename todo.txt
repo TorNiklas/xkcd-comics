@@ -30,5 +30,4 @@ add note for .exe location
 bugs/todo: 
 enter for search
 don't jump 2 when fav is deleted
-scrollbar?
 rename fav button on unfav

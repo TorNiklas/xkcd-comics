@@ -37,6 +37,8 @@ namespace xkcd_comics
 			lb_details.MaximumSize = new Size(image_showcase.Location.X-10, 0);
 			GetAndPresentImageForID(currentID);
 
+			pnl_details.Location = new Point(6, pnl_details.Location.Y);
+
 			//this is just to ensure that everything fits from the get go
 			OnResize(null, null);
 
@@ -59,7 +61,7 @@ namespace xkcd_comics
 			image_showcase.Size = new Size(currentWidth - markX, currentHeight);
 
 			//details
-			pnl_details.Size = new Size(markX, currentHeight - pnl_details.Location.Y);
+			pnl_details.Size = new Size(markX - pnl_details.Location.X, currentHeight - pnl_details.Location.Y);
 			lb_details.MaximumSize = new Size(pnl_details.Size.Width - 15, currentHeight - lb_details.Location.Y);
 
 			lb_latest_comic.MaximumSize = new Size((markX - 6) - lb_latest_comic.Location.X, 0);
@@ -130,10 +132,12 @@ namespace xkcd_comics
 			if(LocalFiles.GetFavorites().Contains(currentID))
             {
 				LocalFiles.Unfavorite(currentID);
-            }
+				btn_favorite.Text = "Favorite";
+			}
 			else
             {
 				LocalFiles.Favorite(currentID);
+				btn_favorite.Text = "Unfavorite";
 			}
 		}
 
@@ -197,6 +201,14 @@ namespace xkcd_comics
 
 					lb_details.Text = text;
 
+					if(LocalFiles.GetFavorites().Contains(id))
+                    {
+						btn_favorite.Text = "Unfavorite";
+                    }
+					else
+                    {
+						btn_favorite.Text = "Favorite";
+                    }
 					currentID = id;
 
 					//FixFontSize();

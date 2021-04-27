@@ -174,9 +174,9 @@ namespace xkcd_comics
             // 
             this.pnl_details.AutoScroll = true;
             this.pnl_details.Controls.Add(this.lb_details);
-            this.pnl_details.Location = new System.Drawing.Point(0, 139);
+            this.pnl_details.Location = new System.Drawing.Point(3, 139);
             this.pnl_details.Name = "pnl_details";
-            this.pnl_details.Size = new System.Drawing.Size(325, 100);
+            this.pnl_details.Size = new System.Drawing.Size(322, 100);
             this.pnl_details.TabIndex = 5;
             // 
             // Form_comics
