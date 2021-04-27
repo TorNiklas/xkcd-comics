@@ -191,12 +191,18 @@ namespace xkcd_comics
 					Bitmap img = new Bitmap(dlPath + id);
 					image_showcase.Image = (Image)img;
 
-					lb_details.Text = "";
-					lb_details.Text += "ID: " + data.id + "\n\n";
-					lb_details.Text += "Title: " + data.title + "\n\n";
-					lb_details.Text += "Title text: " + data.titleText + "\n\n";
-					lb_details.Text += "Transcript: " + data.transcript + "\n";
-					lb_details.Text += "Explanation: " + data.explanation;
+					string text = "";
+					text += "ID: " + data.id + "\n\n";
+					text += "Title: " + data.title + "\n\n";
+					text += "Title text: " + data.titleText + "\n\n";
+					text += "Transcript: " + data.transcript + "\n";
+					text += "Explanation: " + data.explanation;
+
+					//Fix encoding
+					byte[] bytes = Encoding.Default.GetBytes(text);
+					text = Encoding.UTF8.GetString(bytes);
+
+					lb_details.Text = text;
 
 					currentID = id;
 

@@ -96,9 +96,9 @@ namespace xkcd_comics
 
 					string url = "https://www.explainxkcd.com/wiki/index.php/" + id;
 					string page = client.DownloadString(url);
-					//Console.WriteLine(page);
+                    Console.WriteLine(page);
 
-					title = new Regex("<td style=\"font-size: 20px; padding-bottom:10px\"><b>").Split(page)[1];
+                    title = new Regex("<td style=\"font-size: 20px; padding-bottom:10px\"><b>").Split(page)[1];
 					title = title.Split('<')[0];
 					//Console.WriteLine(title);
 
@@ -118,10 +118,11 @@ namespace xkcd_comics
 
 					explanation = new Regex("Explanation\">edit</a><span class=\"mw-editsection-bracket\">]</span></span></h2>").Split(page)[1];
 					explanation = new Regex("<h2><span class=\"mw-headline\" id=\"Transcript\">Transcript").Split(explanation)[0];
-					explanation = new Regex("<.+?>").Replace(explanation, "");
-					//Console.WriteLine(explanation);
+					//explanation = new Regex("<.+?>").Replace(explanation, "");
+					explanation = new Regex("<sup>.+?</sup>|<.+?>").Replace(explanation, "");
+					Console.WriteLine(explanation);
 
-					Xkcd_data data = new Xkcd_data(id, title, titleText, transcript, imgUrl, explanation);
+                    Xkcd_data data = new Xkcd_data(id, title, titleText, transcript, imgUrl, explanation);
 
 					return data;
 				}
